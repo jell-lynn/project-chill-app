@@ -1,6 +1,6 @@
 {
-    "name": "chill",
-    "short_name": "chill",
+    "name": "chill_app",
+    "short_name": "chill_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
