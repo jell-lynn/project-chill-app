@@ -1,36 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:chill_app/pages/home_swipe.dart';
-import 'package:chill_app/models/user.dart'; 
+import 'package:chill_app/models/user.dart';
 import 'package:chill_app/models/signup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _loginUser(BuildContext context) {
+  void _loginUser(BuildContext context) async {
     String enteredUsername = _usernameController.text;
     String enteredPassword = _passwordController.text;
 
     // Get user data from UserData class
-    List<UserData> users = UserData.getuser();
+    List<UserData> users = UserData.getUsers();
+
+    // Get user data from SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? storedUserData = prefs.getString('userData');
 
     // Check if entered username and password match any user in the system
     bool isAuthenticated = users.any((user) =>
         user.username == enteredUsername && user.password == enteredPassword);
-
     if (isAuthenticated) {
       // Navigate to home page if authentication is successful
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomeSwipe()),
       );
+    } 
+
+    else if (storedUserData != null) {
+      UserData storedUser = UserData.fromJson(storedUserData);
+
+      // Check if entered username and password match the stored user data
+      if (storedUser.username == enteredUsername && storedUser.password == enteredPassword) {
+        // Navigate to home page if authentication is successful
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeSwipe()),
+        );
+      } else {
+        // Show error message for invalid username or password
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Login Failed'),
+            content: Text('Invalid username or password. Please try again.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
     } else {
-      // Show error message or handle authentication failure
+      // Show error message if no user data is found
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
           title: Text('Login Failed'),
-          content: Text('Invalid username or password. Please try again.'),
+          content: Text('User data not found. Please sign up first.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
@@ -142,22 +174,19 @@ class Login extends StatelessWidget {
                         fontFamily: 'PK',
                       ),
                     ),
-                    MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Signup()),
-                          );
-                        },
-                        child: Text(
-                          'Sign Up',
-                          style: TextStyle(
-                            color: Color(0xFFDAC0A3),
-                            fontSize: 16,
-                            fontFamily: 'PK',
-                          ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Signup()),
+                        );
+                      },
+                      child: Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          color: Color(0xFFDAC0A3),
+                          fontSize: 16,
+                          fontFamily: 'PK',
                         ),
                       ),
                     ),
