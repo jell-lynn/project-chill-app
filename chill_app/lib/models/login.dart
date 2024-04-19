@@ -1,44 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:chill_app/pages/home_swipe.dart';
-import 'package:chill_app/models/user.dart';
+import 'package:chill_app/models/bottom_navigation.dart';
 import 'package:chill_app/models/signup.dart';
+import 'package:chill_app/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+ 
 class Login extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+ 
   void _loginUser(BuildContext context) async {
     String enteredUsername = _usernameController.text;
     String enteredPassword = _passwordController.text;
-
+ 
     // Get user data from UserData class
     List<UserData> users = UserData.getUsers();
-
+ 
     // Get user data from SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? storedUserData = prefs.getString('userData');
-
+ 
     // Check if entered username and password match any user in the system
     bool isAuthenticated = users.any((user) =>
         user.username == enteredUsername && user.password == enteredPassword);
+ 
     if (isAuthenticated) {
       // Navigate to home page if authentication is successful
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeSwipe()),
+        MaterialPageRoute(builder: (context) => BottomNavigation()),
       );
-    } 
-
-    else if (storedUserData != null) {
+    } else if (storedUserData != null) {
       UserData storedUser = UserData.fromJson(storedUserData);
-
+ 
       // Check if entered username and password match the stored user data
-      if (storedUser.username == enteredUsername && storedUser.password == enteredPassword) {
+      if (storedUser.username == enteredUsername &&
+          storedUser.password == enteredPassword) {
         // Navigate to home page if authentication is successful
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomeSwipe()),
+          MaterialPageRoute(builder: (context) => BottomNavigation()),
         );
       } else {
         // Show error message for invalid username or password
@@ -73,7 +73,7 @@ class Login extends StatelessWidget {
       );
     }
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +90,7 @@ class Login extends StatelessWidget {
           ),
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
@@ -119,7 +119,7 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 40,
                 ),
                 // Text fields for username and password
                 Padding(
@@ -138,7 +138,7 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 // Button to perform login action
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 SizedBox(
                   width: 200,
                   child: ElevatedButton(
@@ -163,34 +163,39 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Don’t have an account? ',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: 'PK',
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Signup()),
-                        );
-                      },
-                      child: Text(
-                        'Sign Up',
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Don’t have an account? ',
                         style: TextStyle(
-                          color: Color(0xFFDAC0A3),
+                          color: Colors.white,
                           fontSize: 16,
                           fontFamily: 'PK',
                         ),
                       ),
-                    ),
-                  ],
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => Signup()),
+                            );
+                          },
+                          child: Text(
+                            'Sign Up',
+                            style: TextStyle(
+                              color: Color(0xFFDAC0A3),
+                              fontSize: 16,
+                              fontFamily: 'PK',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -199,9 +204,9 @@ class Login extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildInputField(String label, String hint,
-      TextEditingController controller,
+ 
+  Widget _buildInputField(
+      String label, String hint, TextEditingController controller,
       {bool obscureText = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,3 +236,4 @@ class Login extends StatelessWidget {
     );
   }
 }
+ 
