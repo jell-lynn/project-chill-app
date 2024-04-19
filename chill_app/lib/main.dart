@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:go_router/go_router.dart';
 
+=======
+import 'package:chill_app/pages/login_page.dart';
+// import 'package:chill_app/pages/home_swipe.dart';
+>>>>>>> main
 import 'package:chill_app/models/bottom_navigation.dart';
 import 'package:chill_app/models/signup.dart';
 // import 'package:chill_app/pages/login_page.dart';
@@ -55,8 +60,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+<<<<<<< HEAD
       routerConfig: _router,
       // home: LoginPage(),
+=======
+      home: LoginPage(),
+>>>>>>> main
       // home: HomeSwipe(),
       // home: BottomNavigation(),
       // home: Consumer<AuthModel>(

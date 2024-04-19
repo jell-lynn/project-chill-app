@@ -55,6 +55,7 @@ class Signup extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: Column(
                     children: [
+<<<<<<< HEAD
                       _buildInputField('Username', 'Enter your username',
                           _usernameController),
                       SizedBox(height: 10),
@@ -67,6 +68,15 @@ class Signup extends StatelessWidget {
                       SizedBox(height: 10),
                       _buildInputField('Phone Number',
                           'Enter your phone number', _phoneNumberController),
+=======
+                      _buildInputField('Username', 'Enter your username', _usernameController),
+                      SizedBox(height: 10),
+                      _buildInputField('Password', 'Enter your password', _passwordController, obscureText: true),
+                      SizedBox(height: 10),
+                      _buildInputField('Email', 'Enter your email', _emailController),
+                      SizedBox(height: 10),
+                      _buildInputField('Phone Number', 'Enter your phone number', _phoneNumberController),
+>>>>>>> main
                     ],
                   ),
                 ),
@@ -92,14 +102,22 @@ class Signup extends StatelessWidget {
                       String userJson = jsonEncode(newUser.toJson());
 
                       // Access SharedPreferences instance
+<<<<<<< HEAD
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
+=======
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+>>>>>>> main
 
                       // Save user data to Local Storage using the key 'userData'
                       await prefs.setString('userData', userJson);
 
                       // Navigate to Login screen after successful signup
+<<<<<<< HEAD
                       Navigator.pushReplacement(
+=======
+                      Navigator.push(
+>>>>>>> main
                         context,
                         MaterialPageRoute(builder: (context) => Login()),
                       );
@@ -129,9 +147,13 @@ class Signup extends StatelessWidget {
     );
   }
 
+<<<<<<< HEAD
   Widget _buildInputField(
       String label, String hint, TextEditingController controller,
       {bool obscureText = false}) {
+=======
+  Widget _buildInputField(String label, String hint, TextEditingController controller, {bool obscureText = false}) {
+>>>>>>> main
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
