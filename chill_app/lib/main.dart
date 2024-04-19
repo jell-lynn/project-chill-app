@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:go_router/go_router.dart';
 
-=======
-import 'package:chill_app/pages/login_page.dart';
-// import 'package:chill_app/pages/home_swipe.dart';
->>>>>>> main
 import 'package:chill_app/models/bottom_navigation.dart';
 import 'package:chill_app/models/signup.dart';
 // import 'package:chill_app/pages/login_page.dart';
@@ -13,11 +8,17 @@ import 'package:chill_app/pages/profile_page.dart';
 import 'package:chill_app/pages/status_page.dart';
 import 'package:chill_app/pages/info_page.dart';
 
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 // import 'package:provider/provider.dart';
 // import 'package:chill_app/models/login_status.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -52,6 +53,8 @@ final GoRouter _router = GoRouter(
   ],
 );
 
+
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -60,14 +63,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-<<<<<<< HEAD
       routerConfig: _router,
-      // home: LoginPage(),
-=======
-      home: LoginPage(),
->>>>>>> main
-      // home: HomeSwipe(),
-      // home: BottomNavigation(),
       // home: Consumer<AuthModel>(
       //     builder: (context, auth, child) {
       //       return auth.isLoggedIn ? HomeSwipe() : HomeLogin();
