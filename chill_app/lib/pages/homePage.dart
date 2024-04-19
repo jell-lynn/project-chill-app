@@ -22,9 +22,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
-        child: AppBar(
+      appBar: AppBar(
           elevation: 0,
           title: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -118,7 +116,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-      ),
       body: _pages[_selectedIndex],
     );
   }
