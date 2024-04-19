@@ -4,6 +4,8 @@ import 'dart:convert';
 
 import 'package:chill_app/models/user.dart';
 import 'package:chill_app/models/login.dart';
+import 'package:chill_app/pages/login_page.dart';
+
 
 class Signup extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
@@ -31,7 +33,7 @@ class Signup extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
+                  padding: const EdgeInsets.only(left: 5.0),
                   child: Row(
                     children: [
                       Text(
@@ -50,9 +52,23 @@ class Signup extends StatelessWidget {
                   height: 20,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: Column(
                     children: [
+<<<<<<< HEAD
+                      _buildInputField('Username', 'Enter your username',
+                          _usernameController),
+                      SizedBox(height: 10),
+                      _buildInputField('Password', 'Enter your password',
+                          _passwordController,
+                          obscureText: true),
+                      SizedBox(height: 10),
+                      _buildInputField(
+                          'Email', 'Enter your email', _emailController),
+                      SizedBox(height: 10),
+                      _buildInputField('Phone Number',
+                          'Enter your phone number', _phoneNumberController),
+=======
                       _buildInputField('Username', 'Enter your username', _usernameController),
                       SizedBox(height: 10),
                       _buildInputField('Password', 'Enter your password', _passwordController, obscureText: true),
@@ -60,6 +76,7 @@ class Signup extends StatelessWidget {
                       _buildInputField('Email', 'Enter your email', _emailController),
                       SizedBox(height: 10),
                       _buildInputField('Phone Number', 'Enter your phone number', _phoneNumberController),
+>>>>>>> main
                     ],
                   ),
                 ),
@@ -85,20 +102,31 @@ class Signup extends StatelessWidget {
                       String userJson = jsonEncode(newUser.toJson());
 
                       // Access SharedPreferences instance
+<<<<<<< HEAD
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+=======
                       SharedPreferences prefs = await SharedPreferences.getInstance();
+>>>>>>> main
 
                       // Save user data to Local Storage using the key 'userData'
                       await prefs.setString('userData', userJson);
 
                       // Navigate to Login screen after successful signup
+<<<<<<< HEAD
+                      Navigator.pushReplacement(
+=======
                       Navigator.push(
+>>>>>>> main
                         context,
                         MaterialPageRoute(builder: (context) => Login()),
                       );
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFDAC0A3)),
-                      minimumSize: MaterialStateProperty.all<Size>(Size(double.infinity, 50)),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Color(0xFFDAC0A3)),
+                      minimumSize: MaterialStateProperty.all<Size>(
+                          Size(double.infinity, 50)),
                     ),
                     child: Text(
                       'Sign Up',
@@ -119,7 +147,13 @@ class Signup extends StatelessWidget {
     );
   }
 
+<<<<<<< HEAD
+  Widget _buildInputField(
+      String label, String hint, TextEditingController controller,
+      {bool obscureText = false}) {
+=======
   Widget _buildInputField(String label, String hint, TextEditingController controller, {bool obscureText = false}) {
+>>>>>>> main
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

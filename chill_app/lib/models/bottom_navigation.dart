@@ -1,4 +1,4 @@
-import 'package:chill_app/pages/home_swipe.dart';
+import 'package:chill_app/pages/homePage.dart';
 import 'package:chill_app/pages/status_page.dart';
 import 'package:chill_app/pages/profile_page.dart';
 // import 'package:chill_app/models/app_bar.dart';
@@ -16,7 +16,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    HomeSwipe(),
+    HomePage(),
     StatusPage(),
     ProfilePage(),
   ];
@@ -30,30 +30,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   title: Row(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       Image.asset(
-      //         'assets/logo.png',
-      //         scale: 40,
-      //       ),
-      //       Text(
-      //         'Let’s Chill',
-      //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-      //       ),
-      //     ],
-      //   ),
-      //   actions: [
-      //     IconButton(
-      //       icon: Icon(Icons.menu),
-      //       onPressed: () {
-      //         // Add functionality for menu button press
-      //       },
-      //     ),
-      //   ],
-      // ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Color(0xFFF9F9F9),

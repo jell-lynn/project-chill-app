@@ -25,6 +25,20 @@ class Login extends StatelessWidget {
 
     if (isAuthenticated) {
       // Navigate to home page if authentication is successful
+<<<<<<< HEAD
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => BottomNavigation()),
+      );
+    } else if (storedUserData != null) {
+      UserData storedUser = UserData.fromJson(storedUserData);
+
+      // Check if entered username and password match the stored user data
+      if (storedUser.username == enteredUsername &&
+          storedUser.password == enteredPassword) {
+        // Navigate to home page if authentication is successful
+        Navigator.pushReplacement(
+=======
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => BottomNavigation()),
@@ -38,6 +52,7 @@ class Login extends StatelessWidget {
       if (storedUser.username == enteredUsername && storedUser.password == enteredPassword) {
         // Navigate to home page if authentication is successful
         Navigator.push(
+>>>>>>> main
           context,
           MaterialPageRoute(builder: (context) => BottomNavigation()),
         );
@@ -120,7 +135,11 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
+<<<<<<< HEAD
+                  height: 40,
+=======
                   height: 50,
+>>>>>>> main
                 ),
                 // Text fields for username and password
                 Padding(
@@ -139,7 +158,11 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 // Button to perform login action
+<<<<<<< HEAD
+                SizedBox(height: 30),
+=======
                 SizedBox(height: 20),
+>>>>>>> main
                 SizedBox(
                   width: 200,
                   child: ElevatedButton(
@@ -164,6 +187,16 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 10),
+<<<<<<< HEAD
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Don’t have an account? ',
+                        style: TextStyle(
+                          color: Colors.white,
+=======
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -186,12 +219,37 @@ class Login extends StatelessWidget {
                         'Sign Up',
                         style: TextStyle(
                           color: Color(0xFFDAC0A3),
+>>>>>>> main
                           fontSize: 16,
                           fontFamily: 'PK',
                         ),
                       ),
+<<<<<<< HEAD
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => Signup()),
+                            );
+                          },
+                          child: Text(
+                            'Sign Up',
+                            style: TextStyle(
+                              color: Color(0xFFDAC0A3),
+                              fontSize: 16,
+                              fontFamily: 'PK',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+=======
                     ),
                   ],
+>>>>>>> main
                 ),
               ],
             ),
@@ -201,8 +259,13 @@ class Login extends StatelessWidget {
     );
   }
 
+<<<<<<< HEAD
+  Widget _buildInputField(
+      String label, String hint, TextEditingController controller,
+=======
   Widget _buildInputField(String label, String hint,
       TextEditingController controller,
+>>>>>>> main
       {bool obscureText = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
