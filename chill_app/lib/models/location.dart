@@ -14,7 +14,7 @@ class LocationData {
   });
 }
 
-LocationData Bellinee = LocationData(
+LocationData bellinee = LocationData(
   name: 'Bellinee',
   imagePaths: [
     'assets/bellinee_1.HEIC',
