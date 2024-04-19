@@ -51,7 +51,7 @@ class _NearbyPageState extends State<NearbyPage> {
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(
-                      vertical: 8.0, horizontal: 16.0), // เพิ่มขอบเขตการแสดง
+                      vertical: 8.0, horizontal: 16.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
