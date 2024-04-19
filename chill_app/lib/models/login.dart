@@ -1,78 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:chill_app/models/bottom_navigation.dart';
-import 'package:chill_app/models/signup.dart';
-import 'package:chill_app/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
-class Login extends StatelessWidget {
+import 'package:chill_app/models/user.dart';
+import 'package:chill_app/models/login.dart';
+import 'package:chill_app/models/user.dart';
+
+
+class Signup extends StatelessWidget {
+  
+  // final formKey = GlobalKey<FormState>();
+  // UserData userinfo = UserData();
+  
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  void _loginUser(BuildContext context) async {
-    String enteredUsername = _usernameController.text;
-    String enteredPassword = _passwordController.text;
-
-    // Get user data from UserData class
-    List<UserData> users = UserData.getUsers();
-
-    // Get user data from SharedPreferences
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? storedUserData = prefs.getString('userData');
-
-    // Check if entered username and password match any user in the system
-    bool isAuthenticated = users.any((user) =>
-        user.username == enteredUsername && user.password == enteredPassword);
-
-    if (isAuthenticated) {
-      // Navigate to home page if authentication is successful
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => BottomNavigation()),
-      );
-    } else if (storedUserData != null) {
-      UserData storedUser = UserData.fromJson(storedUserData);
-
-      // Check if entered username and password match the stored user data
-      if (storedUser.username == enteredUsername &&
-          storedUser.password == enteredPassword) {
-        // Navigate to home page if authentication is successful
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => BottomNavigation()),
-        );
-      } else {
-        // Show error message for invalid username or password
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Login Failed'),
-            content: Text('Invalid username or password. Please try again.'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
-              ),
-            ],
-          ),
-        );
-      }
-    } else {
-      // Show error message if no user data is found
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Login Failed'),
-          content: Text('User data not found. Please sign up first.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
-    }
-  }
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -95,55 +38,76 @@ class Login extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
-                  child: Column(
+                  child: Row(
                     children: [
                       Text(
-                        'Welcome Back!',
+                        'Sign Up',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 50,
+                          fontSize: 60,
                           fontFamily: 'PK',
                           fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'Login to continue',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontFamily: 'PK',
-                          fontWeight: FontWeight.normal,
                         ),
                       ),
                     ],
                   ),
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 20,
                 ),
-                // Text fields for username and password
                 Padding(
+                  // key: formKey,
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: Column(
                     children: [
                       _buildInputField('Username', 'Enter your username',
                           _usernameController),
-                      SizedBox(
-                        height: 20,
-                      ),
+                      SizedBox(height: 10),
                       _buildInputField('Password', 'Enter your password',
                           _passwordController,
                           obscureText: true),
+                      SizedBox(height: 10),
+                      _buildInputField(
+                          'Email', 'Enter your email', _emailController),
+                      SizedBox(height: 10),
+                      _buildInputField('Phone Number',
+                          'Enter your phone number', _phoneNumberController),
                     ],
                   ),
                 ),
-                // Button to perform login action
-                SizedBox(height: 30),
+                SizedBox(height: 20),
                 SizedBox(
                   width: 200,
                   child: ElevatedButton(
-                    onPressed: () {
-                      _loginUser(context); // Call _loginUser function
+                    onPressed: () async {
+                      String username = _usernameController.text;
+                      String password = _passwordController.text;
+                      String email = _emailController.text;
+                      String phoneNumber = _phoneNumberController.text;
+
+                      // Create a User object from the input data
+                      UserData newUser = UserData(
+                        username: username,
+                        password: password,
+                        email: email,
+                        phoneNumber: phoneNumber,
+                      );
+
+                      // Convert User object to JSON string
+                      String userJson = jsonEncode(newUser.toJson());
+
+                      // Access SharedPreferences instance
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+
+                      // Save user data to Local Storage using the key 'userData'
+                      await prefs.setString('userData', userJson);
+
+                      // Navigate to Login screen after successful signup
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login()),
+                      );
                     },
                     style: ButtonStyle(
                       backgroundColor:
@@ -152,7 +116,7 @@ class Login extends StatelessWidget {
                           Size(double.infinity, 50)),
                     ),
                     child: Text(
-                      'Login',
+                      'Sign Up',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,
@@ -160,41 +124,6 @@ class Login extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Don’t have an account? ',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'PK',
-                        ),
-                      ),
-                      MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => Signup()),
-                            );
-                          },
-                          child: Text(
-                            'Sign Up',
-                            style: TextStyle(
-                              color: Color(0xFFDAC0A3),
-                              fontSize: 16,
-                              fontFamily: 'PK',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ],
