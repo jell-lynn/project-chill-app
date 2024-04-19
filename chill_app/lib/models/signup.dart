@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+
+import 'package:chill_app/models/user.dart';
 import 'package:chill_app/models/login.dart';
+import 'package:chill_app/pages/login_page.dart';
+
 
 class Signup extends StatelessWidget {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +33,7 @@ class Signup extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
+                  padding: const EdgeInsets.only(left: 5.0),
                   child: Row(
                     children: [
                       Text(
@@ -39,47 +50,65 @@ class Signup extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 20,
-                ), // เพิ่มระยะห่างระหว่างข้อความกับช่องใส่ข้อมูล
-                // Text fields for username, password, email, and phone number
+                ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: Column(
                     children: [
-                      _buildInputField('Username', 'Enter your username'),
-                      SizedBox(
-                        width: 250,
-                        height: 10,
-                      ),
+                      _buildInputField('Username', 'Enter your username',
+                          _usernameController),
+                      SizedBox(height: 10),
                       _buildInputField('Password', 'Enter your password',
+                          _passwordController,
                           obscureText: true),
-                      SizedBox(
-                        width: 250,
-                        height: 10,
-                      ),
-                      _buildInputField('Email', 'Enter your email'),
-                      SizedBox(
-                        width: 250,
-                        height: 10,
-                      ),
+                      SizedBox(height: 10),
+                      _buildInputField(
+                          'Email', 'Enter your email', _emailController),
+                      SizedBox(height: 10),
                       _buildInputField('Phone Number',
-                          'Enter your phone number'),
+                          'Enter your phone number', _phoneNumberController),
                     ],
                   ),
                 ),
-                // Button to perform signup action
                 SizedBox(height: 20),
                 SizedBox(
-                  width: 200, // กำหนดความยาวของปุ่ม
+                  width: 200,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      String username = _usernameController.text;
+                      String password = _passwordController.text;
+                      String email = _emailController.text;
+                      String phoneNumber = _phoneNumberController.text;
+
+                      // Create a User object from the input data
+                      UserData newUser = UserData(
+                        username: username,
+                        password: password,
+                        email: email,
+                        phoneNumber: phoneNumber,
+                      );
+
+                      // Convert User object to JSON string
+                      String userJson = jsonEncode(newUser.toJson());
+
+                      // Access SharedPreferences instance
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+
+                      // Save user data to Local Storage using the key 'userData'
+                      await prefs.setString('userData', userJson);
+
+                      // Navigate to Login screen after successful signup
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => Login()),
                       );
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFDAC0A3)),
-                      minimumSize: MaterialStateProperty.all<Size>(Size(double.infinity, 50)),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Color(0xFFDAC0A3)),
+                      minimumSize: MaterialStateProperty.all<Size>(
+                          Size(double.infinity, 50)),
                     ),
                     child: Text(
                       'Sign Up',
@@ -100,7 +129,8 @@ class Signup extends StatelessWidget {
     );
   }
 
-  Widget _buildInputField(String label, String hint,
+  Widget _buildInputField(
+      String label, String hint, TextEditingController controller,
       {bool obscureText = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,10 +145,11 @@ class Signup extends StatelessWidget {
         ),
         SizedBox(height: 5),
         TextFormField(
+          controller: controller,
           decoration: InputDecoration(
             hintText: hint,
             filled: true,
-            fillColor: Color(0xFFF8F0E5), // กำหนดสีพื้นหลังของกรอบ
+            fillColor: Color(0xFFF8F0E5),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25),
             ),

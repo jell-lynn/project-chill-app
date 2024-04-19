@@ -48,8 +48,10 @@ class LoginPage extends StatelessWidget {
                     );
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFDAC0A3)),
-                    minimumSize: MaterialStateProperty.all<Size>(Size(double.infinity, 50)),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Color(0xFFDAC0A3)),
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(double.infinity, 50)),
                   ),
                   child: Text(
                     'Login',
@@ -74,8 +76,10 @@ class LoginPage extends StatelessWidget {
                     );
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFDAC0A3)),
-                    minimumSize: MaterialStateProperty.all<Size>(Size(double.infinity, 50)),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Color(0xFFDAC0A3)),
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(double.infinity, 50)),
                   ),
                   child: Text(
                     'Sign Up',

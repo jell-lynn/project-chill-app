@@ -1,36 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:chill_app/pages/homePage.dart';
+import 'package:chill_app/pages/home_swipe.dart';
 import 'package:chill_app/pages/home_nearby.dart';
 import 'package:chill_app/pages/home_livemap.dart';
 
-
-class appBar extends StatefulWidget {
-  const appBar ({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<appBar> createState() => _appBarState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _appBarState extends State<appBar> {
+class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _UpPages = [
-    HomePage(),
+  final List<Widget> _pages = [
+    HomeSwipe(),
     NearbyPage(),
     LiveMapPage(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70.0),
+        child: AppBar(
+          elevation: 0,
           title: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -39,23 +34,24 @@ class _appBarState extends State<appBar> {
                 children: [
                   Image.asset(
                     'assets/logo.png',
-                    scale: 40,
+                    scale: 35,
                   ),
+                  SizedBox(width: 10),
                   Text(
                     'Let’s Chill',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                   ),
                 ],
               ),
+              SizedBox(height: 3),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                      );
+                      setState(() {
+                        _selectedIndex = 0;
+                      });
                     },
                     child: Text(
                       'Swipe',
@@ -75,10 +71,9 @@ class _appBarState extends State<appBar> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NearbyPage()),
-                      );
+                      setState(() {
+                        _selectedIndex = 1;
+                      });
                     },
                     child: Text(
                       'Nearby',
@@ -98,10 +93,9 @@ class _appBarState extends State<appBar> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LiveMapPage()),
-                      );
+                      setState(() {
+                        _selectedIndex = 2;
+                      });
                     },
                     child: Text(
                       'LiveMap',
@@ -123,7 +117,9 @@ class _appBarState extends State<appBar> {
               ),
             ],
           ),
+        ),
       ),
+      body: _pages[_selectedIndex],
     );
   }
 }

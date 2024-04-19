@@ -2,10 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:swipe_cards/draggable_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
-import 'package:chill_app/pages/home_nearby.dart';
-import 'package:chill_app/pages/home_livemap.dart';
-import 'package:chill_app/models/bottom_navigation.dart';
-// import 'package:chill_app/models/swipe_card.dart';
+
 
 class HomeSwipe extends StatefulWidget {
   const HomeSwipe({Key? key}) : super(key: key);
@@ -40,9 +37,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
         nopeAction: () {
           log('Nope');
         },
-        onSlideUpdate: (SlideRegion? region) async {
-          log('Region $region');
-        }),
+    ),
     SwipeItem(
         content: 'Mahidol Learning Center (MLC)',
         likeAction: () {
@@ -51,9 +46,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
         nopeAction: () {
           log('Nope');
         },
-        onSlideUpdate: (SlideRegion? region) async {
-          log('Region $region');
-        }),
+    ),
     SwipeItem(
         content: 'Innovative Space MUICT',
         likeAction: () {
@@ -62,9 +55,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
         nopeAction: () {
           log('Nope');
         },
-        onSlideUpdate: (SlideRegion? region) async {
-          log('Region $region');
-        }),
+    ),
     SwipeItem(
         content: 'Cafe Amazon EN',
         likeAction: () {
@@ -73,9 +64,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
         nopeAction: () {
           log('Nope');
         },
-        onSlideUpdate: (SlideRegion? region) async {
-          log('Region $region');
-        }),
+    ),
     SwipeItem(
         content: 'Bellinee’s at MLC',
         likeAction: () {
@@ -84,9 +73,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
         nopeAction: () {
           log('Nope');
         },
-        onSlideUpdate: (SlideRegion? region) async {
-          log('Region $region');
-        }),
+    ),
   ];
 
   @override
@@ -101,115 +88,19 @@ class _HomeSwipeState extends State<HomeSwipe> {
     super.dispose();
   }
 
-  int _selectedIndex = 0;
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
-        child: AppBar(
-          elevation: 0,
-          title: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/logo.png',
-                    scale: 40,
-                  ),
-                  Text(
-                    'Let’s Chill',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomeSwipe()),
-                      );
-                    },
-                    child: Text(
-                      'Swipe',
-                      style: TextStyle(
-                        fontWeight: _selectedIndex == 0
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                        fontSize: 16,
-                        decoration: _selectedIndex == 0
-                            ? TextDecoration.underline
-                            : TextDecoration.none,
-                        color: _selectedIndex == 0
-                            ? Color(0xFF172B4D)
-                            : Color(0xFF666666),
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NearbyPage()),
-                      );
-                    },
-                    child: Text(
-                      'Nearby',
-                      style: TextStyle(
-                        fontWeight: _selectedIndex == 1
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                        fontSize: 16,
-                        decoration: _selectedIndex == 1
-                            ? TextDecoration.underline
-                            : TextDecoration.none,
-                        color: _selectedIndex == 1
-                            ? Color(0xFF172B4D)
-                            : Color(0xFF666666),
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LiveMapPage()),
-                      );
-                    },
-                    child: Text(
-                      'LiveMap',
-                      style: TextStyle(
-                        fontWeight: _selectedIndex == 2
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                        fontSize: 16,
-                        decoration: _selectedIndex == 2
-                            ? TextDecoration.underline
-                            : TextDecoration.none,
-                        color: _selectedIndex == 2
-                            ? Color(0xFF172B4D)
-                            : Color(0xFF666666),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-      
       body: SwipeCards(
         matchEngine: _matchEngine,
         upSwipeAllowed: true,
         onStackFinished: () {},
         itemBuilder: (context, index) {
+          if (index >= items.length) {
+            return Container(); // หยุดการสร้าง items เมื่อ index เกินขนาดของ items list
+          }
           return Padding(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
             child: SizedBox(
