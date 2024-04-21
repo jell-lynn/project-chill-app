@@ -52,37 +52,37 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBhIOfW2U9Cu8UY8_3rSYHtLv3bmZ8WjjE',
-    appId: '1:812521849481:android:5dcf460b2eedbf55157c58',
+    appId: '1:812521849481:android:a1484a46acf78341157c58',
     messagingSenderId: '812521849481',
     projectId: 'chill-app-809e7',
     storageBucket: 'chill-app-809e7.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB3l-ArcYg29fx5CJhnGLdY5qZkbzKifck',
-    appId: '1:812521849481:ios:bbddeac5d54aa7ab157c58',
+    apiKey: 'AIzaSyDhjKTu_Mcd1T4gt3FmSn15RNqKhmH1p5A',
+    appId: '1:812521849481:ios:5a3da67b81a025e3157c58',
     messagingSenderId: '812521849481',
     projectId: 'chill-app-809e7',
     storageBucket: 'chill-app-809e7.appspot.com',
-    iosBundleId: 'com.example.chillApp',
+    iosBundleId: 'com.example.chillAppMobile',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyB3l-ArcYg29fx5CJhnGLdY5qZkbzKifck',
-    appId: '1:812521849481:ios:bbddeac5d54aa7ab157c58',
+    apiKey: 'AIzaSyDhjKTu_Mcd1T4gt3FmSn15RNqKhmH1p5A',
+    appId: '1:812521849481:ios:5a3da67b81a025e3157c58',
     messagingSenderId: '812521849481',
     projectId: 'chill-app-809e7',
     storageBucket: 'chill-app-809e7.appspot.com',
-    iosBundleId: 'com.example.chillApp',
+    iosBundleId: 'com.example.chillAppMobile',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyDlwAg1ejECVHLuY7qt6wy5pKMSL5Mxuyc',
-    appId: '1:812521849481:web:b1d899f2933610bb157c58',
+    appId: '1:812521849481:web:a4d47dd7a80cc39a157c58',
     messagingSenderId: '812521849481',
     projectId: 'chill-app-809e7',
     authDomain: 'chill-app-809e7.firebaseapp.com',
     storageBucket: 'chill-app-809e7.appspot.com',
-    measurementId: 'G-EWKTRZEMLF',
+    measurementId: 'G-676XQSZVMY',
   );
 }

@@ -1,0 +1,21 @@
+[debug] [2024-04-19T16:42:31.223Z] ----------------------------------------------------------------------
+[debug] [2024-04-19T16:42:31.225Z] Command:       C:\Users\sannt\DOWNLO~1\firebase-tools-instant-win.exe C:\Users\sannt\.cache\firebase\tools\lib\node_modules\firebase-tools\lib\bin\firebase init
+[debug] [2024-04-19T16:42:31.226Z] CLI Version:   13.7.3
+[debug] [2024-04-19T16:42:31.226Z] Platform:      win32
+[debug] [2024-04-19T16:42:31.226Z] Node Version:  v18.5.0
+[debug] [2024-04-19T16:42:31.227Z] Time:          Fri Apr 19 2024 23:42:31 GMT+0700 (Indochina Time)
+[debug] [2024-04-19T16:42:31.227Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-04-19T16:42:31.235Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-04-19T16:42:31.235Z] > authorizing via signed-in user (10943sitthida@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\sannt\project-chill-app
+

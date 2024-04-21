@@ -2,27 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:chill_app/pages/home_swipe.dart';
 import 'package:chill_app/pages/home_nearby.dart';
 import 'package:chill_app/pages/home_livemap.dart';
-
+ 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
-
+ 
   @override
   State<HomePage> createState() => _HomePageState();
 }
-
+ 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-
+ 
   final List<Widget> _pages = [
     HomeSwipe(),
     NearbyPage(),
     LiveMapPage(),
   ];
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100.0),
+        child: Container(
+          height: 100.0,
+          child: AppBar(
           elevation: 0,
           title: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,14 +34,14 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'assets/logo.png',
-                    scale: 35,
-                  ),
+                   Image.network(
+                  'https://drive.google.com/uc?export=view&id=1TEuoAczH_WCEBC-H0EXBOpVFNVRciSNL',
+                  scale: 30,
+                ),
                   SizedBox(width: 10),
                   Text(
                     'Let’s Chill',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
                   ),
                 ],
               ),
@@ -57,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                         fontWeight: _selectedIndex == 0
                             ? FontWeight.bold
                             : FontWeight.normal,
-                        fontSize: 16,
+                        fontSize: 20,
                         decoration: _selectedIndex == 0
                             ? TextDecoration.underline
                             : TextDecoration.none,
@@ -79,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                         fontWeight: _selectedIndex == 1
                             ? FontWeight.bold
                             : FontWeight.normal,
-                        fontSize: 16,
+                        fontSize: 20,
                         decoration: _selectedIndex == 1
                             ? TextDecoration.underline
                             : TextDecoration.none,
@@ -101,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                         fontWeight: _selectedIndex == 2
                             ? FontWeight.bold
                             : FontWeight.normal,
-                        fontSize: 16,
+                        fontSize: 20,
                         decoration: _selectedIndex == 2
                             ? TextDecoration.underline
                             : TextDecoration.none,
@@ -116,7 +120,11 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+        ),
+        ),
       body: _pages[_selectedIndex],
+     
     );
   }
 }
+ 

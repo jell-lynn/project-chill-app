@@ -1,75 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+ 
 import 'package:chill_app/models/bottom_navigation.dart';
 import 'package:chill_app/models/signup.dart';
-import 'package:chill_app/models/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
  
 class Login extends StatelessWidget {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
  
-  void _loginUser(BuildContext context) async {
-    String enteredUsername = _usernameController.text;
+  Future<void> _loginUser(BuildContext context) async {
+    String enteredEmail = _emailController.text;
     String enteredPassword = _passwordController.text;
  
-    // Get user data from UserData class
-    List<UserData> users = UserData.getUsers();
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: enteredEmail,
+        password: enteredPassword,
+      );
  
-    // Get user data from SharedPreferences
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? storedUserData = prefs.getString('userData');
- 
-    // Check if entered username and password match any user in the system
-    bool isAuthenticated = users.any((user) =>
-        user.username == enteredUsername && user.password == enteredPassword);
- 
-    if (isAuthenticated) {
-      // Navigate to home page if authentication is successful
+      // Authentication successful, navigate to home page
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => BottomNavigation()),
       );
-    } else if (storedUserData != null) {
-      UserData storedUser = UserData.fromJson(storedUserData);
- 
-      // Check if entered username and password match the stored user data
-      if (storedUser.username == enteredUsername &&
-          storedUser.password == enteredPassword) {
-        // Navigate to home page if authentication is successful
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => BottomNavigation()),
-        );
-      } else {
-        // Show error message for invalid username or password
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Login Failed'),
-            content: Text('Invalid username or password. Please try again.'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
-              ),
-            ],
-          ),
-        );
-      }
-    } else {
-      // Show error message if no user data is found
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Login Failed'),
-          content: Text('User data not found. Please sign up first.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('OK'),
-            ),
-          ],
-        ),
+    } catch (e) {
+      // Authentication failed
+      Fluttertoast.showToast(
+        msg: 'Invalid email or password. Please try again.',
+        gravity: ToastGravity.CENTER,
       );
     }
   }
@@ -121,19 +80,14 @@ class Login extends StatelessWidget {
                 SizedBox(
                   height: 40,
                 ),
-                // Text fields for username and password
+                // Text fields for email and password
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                   child: Column(
                     children: [
-                      _buildInputField('Username', 'Enter your username',
-                          _usernameController),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      _buildInputField('Password', 'Enter your password',
-                          _passwordController,
-                          obscureText: true),
+                      _buildInputField('Email', 'Enter your email', _emailController),
+                      SizedBox(height: 20),
+                      _buildInputField('Password', 'Enter your password', _passwordController, obscureText: true),
                     ],
                   ),
                 ),
@@ -146,10 +100,8 @@ class Login extends StatelessWidget {
                       _loginUser(context); // Call _loginUser function
                     },
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xFFDAC0A3)),
-                      minimumSize: MaterialStateProperty.all<Size>(
-                          Size(double.infinity, 50)),
+                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFDAC0A3)),
+                      minimumSize: MaterialStateProperty.all<Size>(Size(double.infinity, 50)),
                     ),
                     child: Text(
                       'Login',
@@ -175,22 +127,19 @@ class Login extends StatelessWidget {
                           fontFamily: 'PK',
                         ),
                       ),
-                      MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => Signup()),
-                            );
-                          },
-                          child: Text(
-                            'Sign Up',
-                            style: TextStyle(
-                              color: Color(0xFFDAC0A3),
-                              fontSize: 16,
-                              fontFamily: 'PK',
-                            ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => Signup()),
+                          );
+                        },
+                        child: Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            color: Color(0xFFDAC0A3),
+                            fontSize: 16,
+                            fontFamily: 'PK',
                           ),
                         ),
                       ),
@@ -205,8 +154,7 @@ class Login extends StatelessWidget {
     );
   }
  
-  Widget _buildInputField(
-      String label, String hint, TextEditingController controller,
+  Widget _buildInputField(String label, String hint, TextEditingController controller,
       {bool obscureText = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,4 +184,3 @@ class Login extends StatelessWidget {
     );
   }
 }
- 

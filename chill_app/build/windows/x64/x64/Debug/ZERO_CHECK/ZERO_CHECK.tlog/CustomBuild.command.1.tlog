@@ -1,0 +1,10 @@
+^C:\USERS\SANNT\DESKTOP\ITDS283_6587106\CHILL_APP_MOBILE\BUILD\WINDOWS\X64\CMAKEFILES\125111947EEB3B234044E81C5A69B63D\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/windows -BC:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/chill_app_mobile.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

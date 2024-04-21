@@ -1,7 +1,9 @@
 import 'package:chill_app/pages/homePage.dart';
 import 'package:chill_app/pages/status_page.dart';
 import 'package:chill_app/pages/profile_page.dart';
-// import 'package:chill_app/models/app_bar.dart';
+import 'package:chill_app/pages/home_swipe.dart';
+import 'package:chill_app/pages/fav_page.dart';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -16,8 +18,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    HomePage(),
+    HomeSwipe(),
     StatusPage(),
+    favPage(),
     ProfilePage(),
   ];
 
@@ -37,8 +40,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
         animationDuration: Duration(milliseconds: 300),
         onTap: _onItemTapped,
         items: [
-          Image.asset('assets/logo.png', width: 50, height: 50),
+          Image.network(
+                      'https://drive.google.com/uc?export=view&id=1TEuoAczH_WCEBC-H0EXBOpVFNVRciSNL',
+                    width: 50,
+                    height: 50,
+                    ),
           Icon(Icons.window_sharp, size: 50, color: Color(0xFFF9F9F9)),
+          Icon(Icons.favorite, size: 50, color: Color(0xFFF9F9F9)),
           Container(
             width: 50,
             height: 50,

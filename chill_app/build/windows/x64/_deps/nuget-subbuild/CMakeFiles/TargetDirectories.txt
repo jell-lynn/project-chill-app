@@ -1,0 +1,3 @@
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/nuget-populate.dir
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/ALL_BUILD.dir
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/ZERO_CHECK.dir

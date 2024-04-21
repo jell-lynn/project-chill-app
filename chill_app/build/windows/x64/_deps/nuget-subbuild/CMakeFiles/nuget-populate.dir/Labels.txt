@@ -1,0 +1,15 @@
+# Target labels
+ nuget-populate
+# Source files and their labels
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/nuget-populate
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/a81e75db0c90d082521be9897cadf611/nuget-populate.rule
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/5c693f837239b702b503e82b18417649/nuget-populate-complete.rule
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/04d18c67f865a494df314c4304925ef8/nuget-populate-build.rule
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/04d18c67f865a494df314c4304925ef8/nuget-populate-configure.rule
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/04d18c67f865a494df314c4304925ef8/nuget-populate-copyfile.rule
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/04d18c67f865a494df314c4304925ef8/nuget-populate-download.rule
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/04d18c67f865a494df314c4304925ef8/nuget-populate-install.rule
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/04d18c67f865a494df314c4304925ef8/nuget-populate-mkdir.rule
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/04d18c67f865a494df314c4304925ef8/nuget-populate-patch.rule
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/04d18c67f865a494df314c4304925ef8/nuget-populate-test.rule
+C:/Users/sannt/Desktop/ITDS283_6587106/chill_app_mobile/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/04d18c67f865a494df314c4304925ef8/nuget-populate-update.rule
