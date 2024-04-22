@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
- 
+
 class StatusPage extends StatefulWidget {
   const StatusPage({super.key});
- 
+
   @override
   State<StatusPage> createState() => _StatusPageState();
 }
- 
+
 class _StatusPageState extends State<StatusPage> {
   List<DocumentSnapshot>? locations;
   String imageUrl = '';
- 
+
   String? selectedItem = 'Status'; // เก็บค่า default สำหรับ Dropdown
   Map<String, String?> statusByLocation = {}; // เก็บสถานะของแต่ละสถานที่
- 
+
   List<String> items = ['Status', 'Few', 'Normal', 'Many'];
   List<bool> toggleValues = [false, false, false, false, false, false];
- 
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +26,7 @@ class _StatusPageState extends State<StatusPage> {
     fetchImageUrl();
     fetchLocations();
   }
- 
+
   Future<void> fetchImageUrl() async {
     try {
       String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
@@ -42,7 +42,7 @@ class _StatusPageState extends State<StatusPage> {
       print('Error fetching image URL: $error');
     }
   }
- 
+
   Future<void> fetchLocations() async {
     try {
       // Fetch data from Firestore collection 'locations'
@@ -61,7 +61,7 @@ class _StatusPageState extends State<StatusPage> {
       print('Error fetching locations: $error');
     }
   }
- 
+
   Color getColorByStatus(String status) {
     switch (status) {
       case 'Status':
@@ -76,7 +76,7 @@ class _StatusPageState extends State<StatusPage> {
         return Colors.white; // สีขาวเป็นค่า default
     }
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,10 +87,10 @@ class _StatusPageState extends State<StatusPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.network(
-                      'https://drive.google.com/uc?export=view&id=1TEuoAczH_WCEBC-H0EXBOpVFNVRciSNL',
-                    scale: 30,
-                    ),
+                  Image.asset(
+                    'assets/logo.png',
+                    scale: 35,
+                  ),
                   SizedBox(width: 10),
                   Text(
                     'Let’s Chill',
@@ -183,7 +183,7 @@ class _StatusPageState extends State<StatusPage> {
                                         newValue; // อัปเดตสถานะของแต่ละสถานที่เมื่อมีการเลือกค่าใหม่
                                   });
                                 },
-                               
+                                
                               ),
                             ],
                           ),

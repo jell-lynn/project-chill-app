@@ -1,24 +1,24 @@
 import 'dart:developer';
- 
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:chill_app/pages/home_livemap.dart';
- 
+
 class HomeSwipe extends StatefulWidget {
   @override
   State<HomeSwipe> createState() => _HomeSwipeState();
 }
- 
+
 class _HomeSwipeState extends State<HomeSwipe> {
   List<DocumentSnapshot>? locations = null;
   String imageUrl = '';
   late MatchEngine _matchEngine;
   int numberPhotos = 6;
   int currentPhotoIndex = 0;
- 
+
   @override
   void initState() {
     super.initState();
@@ -26,30 +26,29 @@ class _HomeSwipeState extends State<HomeSwipe> {
     fetchLocations();
     _matchEngine = MatchEngine(swipeItems: items);
   }
- 
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
- 
-  // GlobalKey<FormState> key = GlobalKey();
- 
+
+
   Future<void> fetchImageUrl() async {
     String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
- 
+
     // Get a reference to storage root
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirImages = referenceRoot.child('images');
- 
+
     // Create a reference for the image to be stored
     Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
- 
+
     try {
       imageUrl = await referenceImageToUpload.getDownloadURL();
     } catch (error) {}
   }
- 
+
   Future<void> fetchLocations() async {
     // Fetch data from Firestore collection 'locations'
     final snapshot = await FirebaseFirestore.instance.collection('locations').get();
@@ -58,23 +57,39 @@ class _HomeSwipeState extends State<HomeSwipe> {
     // Update the state to rebuild the UI with fetched data
     setState(() {});
   }
- 
-  Future<void> _addToFavorite(String name, String image) async {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  var currentUser = _auth.currentUser;
-  CollectionReference _collectionRef = FirebaseFirestore.instance.collection('users');
-  await _collectionRef.doc(currentUser!.email).collection('favoriteLocations').add({
-    'placename': name,
-    'place_img': image,
-  });
+
+//   Future<void> _addToFavorite(String name, String image) async {
+//   final FirebaseAuth _auth = FirebaseAuth.instance;
+//   var currentUser = _auth.currentUser;
+//   CollectionReference _collectionRef = FirebaseFirestore.instance.collection('users');
+//   await _collectionRef.doc(currentUser!.email).collection('favoriteLocations').add({
+//     'placename': name,
+//     'place_img': image,
+//   });
+// }
+
+Future<bool> _addToFavorite(String name, String image) async {
+  try {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    var currentUser = _auth.currentUser;
+    CollectionReference _collectionRef = FirebaseFirestore.instance.collection('users');
+    // เพิ่มสถานที่โปรดพร้อมกับข้อมูลเกี่ยวกับการ fav
+    await _collectionRef.doc(currentUser!.email).collection('favoriteLocations').add({
+      'placename': name,
+      'place_img': image,
+      'isFavorited': true, // เพิ่มค่า isFavorited เป็น true เพื่อแสดงว่าเป็นสถานที่โปรด
+    });
+    return true; // ส่งค่าเป็น true เมื่อการเพิ่มสถานที่เข้ารายการโปรดสำเร็จ
+  } catch (error) {
+    print('Error adding location to favorites: $error');
+    return false; // ส่งค่าเป็น false เมื่อเกิดข้อผิดพลาด
+  }
 }
- 
- 
- 
+
   final _controller = PageController(
     initialPage: 0,
   );
- 
+
   List<SwipeItem> items = [
     SwipeItem(
       // content: 'Library and Knowledge Center',
@@ -137,20 +152,20 @@ class _HomeSwipeState extends State<HomeSwipe> {
       },
     ),
   ];
- 
- 
- 
+
+  
+
   @override
   Widget build(BuildContext context) {
     if (locations == null) {
       return Center(child: CircularProgressIndicator());
     }
- 
+
     // ตรวจสอบว่ามีข้อมูลใน locations หรือไม่
   if (locations!.isEmpty) {
     return Center(child: Text('No data available'));
   }
- 
+
     return Scaffold(
       body: SwipeCards(
         matchEngine: _matchEngine,
@@ -160,7 +175,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
           var location = locations![index];
           var placeName = location['placename'];
           var placeImgUrl = location['place_img'];
- 
+
           return Padding(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
             child: SizedBox(

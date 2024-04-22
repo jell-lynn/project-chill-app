@@ -1,83 +1,152 @@
+// import 'package:flutter/material.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// // import 'package:chill_app/pages/login_page.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:chill_app/models/bottom_navigation.dart';
+ 
+// class ProfilePage extends StatefulWidget {
+//   @override
+//   State<ProfilePage> createState() => _ProfilePageState();
+// }
+
+// class _ProfilePageState extends State<ProfilePage> {
+//   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Padding(
+//         padding: const EdgeInsets.symmetric(horizontal: 16.0),
+//         child: FutureBuilder<DocumentSnapshot>(
+//           future: getUserData(), // เรียกใช้ Future สำหรับดึงข้อมูลผู้ใช้
+//           builder: (context, snapshot) {
+//             if (snapshot.connectionState == ConnectionState.waiting) {
+//               return Center(child: CircularProgressIndicator());
+//             } else {
+//               if (snapshot.hasError) {
+//                 return Center(child: Text('Error: ${snapshot.error}'));
+//               } else {
+//                 // ดึงข้อมูลผู้ใช้จาก snapshot
+//                 var userData = snapshot.data;
+//                 String username = userData!['username'];
+//                 String emailAddress = userData['email'];
+//                 String contact = userData['contact'];
+//                 String imageUrl = userData['imageUrl'];
+ 
+//                 return Column(
+//                   crossAxisAlignment: CrossAxisAlignment.stretch,
+//                   children: [
+//                     SizedBox(height: 20),
+//                     Center(
+//                       child: CircleAvatar(
+//                         radius: 60,
+//                         backgroundImage: NetworkImage(imageUrl),
+//                       ),
+//                     ),
+//                     SizedBox(height: 20),
+//                     Center(
+//                       child: Text(
+//                         username,
+//                         style: TextStyle(fontSize: 24),
+//                       ),
+//                     ),
+//                     SizedBox(height: 20),
+//                     Padding(
+//                       padding: const EdgeInsets.only(left: 16.0),
+//                       child: Text(
+//                         'PROFILE',
+//                         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+//                       ),
+//                     ),
+//                     Divider(),
+//                     ListTile(
+//                       title: Text(
+//                         'Email',
+//                         style: TextStyle(fontSize: 16),
+//                       ),
+//                       subtitle: Text(
+//                         emailAddress,
+//                         style: TextStyle(fontSize: 20),
+//                       ),
+//                     ),
+//                     ListTile(
+//                       title: Text(
+//                         'Contact',
+//                         style: TextStyle(fontSize: 16),
+//                       ),
+//                       subtitle: Text(
+//                         contact,
+//                         style: TextStyle(fontSize: 20),
+//                       ),
+//                     ),
+//                     SizedBox(height: 20),
+//                     Center(
+//                       child: Padding(
+//                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
+//                         child: ElevatedButton(
+//                           onPressed: () async {
+//                             await _auth.signOut();
+//                             Navigator.pushReplacement(
+//                               context,
+//                               MaterialPageRoute(builder: (context) => BottomNavigation()),
+//                             );
+//                           },
+//                           style: ButtonStyle(
+//                             backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFDAC0A3)),
+//                             minimumSize: MaterialStateProperty.all<Size>(
+//                               Size(double.infinity, 50),
+//                             ),
+//                           ),
+//                           child: Text(
+//                             'Log Out',
+//                             style: TextStyle(
+//                               color: Colors.white,
+//                               fontSize: 24,
+//                               fontFamily: 'PK',
+//                               fontWeight: FontWeight.bold,
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 );
+//               }
+//             }
+//           },
+//         ),
+//       ),
+//     );
+//   }
+
+//   Future<DocumentSnapshot> getUserData() async {
+//     String? userId = _auth.currentUser?.uid; // ระบุ ID ของผู้ใช้ที่ต้องการดึงข้อมูล
+//     if (userId != null) {
+//       return await FirebaseFirestore.instance.collection('users').doc(userId).get();
+//     } else {
+//       throw 'User ID is null';
+//     }
+//     // return await FirebaseFirestore.instance.collection('users').doc(userId).get();
+//   }
+// }
+
+import 'package:chill_app/pages/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:chill_app/main.dart';
-
-class ProfilePage extends StatefulWidget {
-  @override
-  _ProfilePageState createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  late User? _currentUser;
-  late String _username = '';
-  late String _email = '';
-  late String _contact = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _currentUser = FirebaseAuth.instance.currentUser;
-    _fetchUserData();
-  }
-
-  Future<void> _fetchUserData() async {
-    if (_currentUser != null) {
-      try {
-        DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(_currentUser!.uid)
-            .get();
-
-        if (userData.exists) {
-          setState(() {
-            _username = userData['username'];
-            _email = userData['email'];
-            _contact = userData['contact'];
-          });
-        }
-      } catch (e) {
-        print('Error fetching user data: $e');
-      }
-    }
-  }
-
+ 
+class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100.0),
-        child: Container(
-          height: 100.0,
-          child: AppBar(
-            elevation: 0,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.network(
-                  'https://drive.google.com/uc?export=view&id=1TEuoAczH_WCEBC-H0EXBOpVFNVRciSNL',
-                  scale: 30,
-                ),
-                // SizedBox(width: 10),
-                Text(
-                  'Let’s Chill',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 70),
             Center(
               child: GestureDetector(
                 onTap: () {
-                  // Handle image tap action
+                  // รายละเอียดการทำงานเมื่อคลิกที่รูปภาพ
                 },
                 child: ClipOval(
                   child: Container(
@@ -99,7 +168,7 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(height: 20),
             Center(
               child: Text(
-                _username,
+                'kaokhao',
                 style: TextStyle(fontSize: 24),
               ),
             ),
@@ -118,7 +187,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: TextStyle(fontSize: 16),
               ),
               subtitle: Text(
-                _email,
+                'kaopscy9802@gmail.com',
                 style: TextStyle(fontSize: 20),
               ),
             ),
@@ -128,7 +197,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: TextStyle(fontSize: 16),
               ),
               subtitle: Text(
-                _contact,
+                '+66 982505279',
                 style: TextStyle(fontSize: 20),
               ),
             ),
@@ -140,11 +209,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => MyApp()),
+                      MaterialPageRoute(builder: (context) => LoginPage()),
                     );
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFDAC0A3)),
+                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF281483)),
                     minimumSize: MaterialStateProperty.all<Size>(
                       Size(double.infinity, 50),
                     ),

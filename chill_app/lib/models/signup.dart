@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
- 
+
 import 'package:chill_app/models/login.dart';
- 
+
 class Signup extends StatefulWidget {
   @override
   _SignupState createState() => _SignupState();
 }
- 
+
 class _SignupState extends State<Signup> {
   String? _selectedImageUrl;
- 
+
   List<String> imageUrls = [
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZdbze89zqCxOm_n1H8WaMdZ7IH1oe8x7LbN_2ova-d8DV2TnblLhvPdEwRvVxBFFWhtA&usqp=CAU',
     'https://secretsurpriseshop.com/cdn/shop/collections/IMG_2102_800x800.jpg?v=1596833937',
@@ -26,21 +26,21 @@ class _SignupState extends State<Signup> {
     'https://pbs.twimg.com/media/C8BXK5KVsAA5NYb.jpg',
     'https://play-lh.googleusercontent.com/Rjyylt1cF6Vs1A8lJZm8yqJJPDOJfk0_BBIoiK6h0V1QENGAHG9tIOD-0eM-odrS3w=w526-h296-rw',
   ];
- 
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
- 
+
   bool isEmailValid(String email) {
     return email.contains('@') && email.contains('.');
   }
- 
+
   bool isPhoneNumberValid(String phoneNumber) {
     String cleanedPhoneNumber = phoneNumber.replaceAll(RegExp(r'[^0-9]'), '');
     return cleanedPhoneNumber.length == 10;
   }
- 
+
   void _showErrorDialog(BuildContext context, String message) {
     showDialog(
       context: context,
@@ -56,22 +56,26 @@ class _SignupState extends State<Signup> {
       ),
     );
   }
- 
-  final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
- 
+
+  final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [Color(0xFF5D43D0), Color(0xFF1B0F51)],
-            ),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF5D43D0),
+              Color(0xFF1B0F51)
+            ], // Set your desired gradient colors
           ),
+        ),
+        child: SingleChildScrollView(
           child: Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -162,7 +166,7 @@ class _SignupState extends State<Signup> {
       ),
     );
   }
- 
+
   Widget _buildInputField(
       String label, String hint, TextEditingController controller,
       {bool obscureText = false}) {
@@ -194,7 +198,7 @@ class _SignupState extends State<Signup> {
       ],
     );
   }
- 
+
   void _selectImage() {
     showDialog(
       context: context,
@@ -251,59 +255,68 @@ class _SignupState extends State<Signup> {
       },
     );
   }
- 
+
   Future<void> _signUp() async {
     String username = _usernameController.text.trim();
     String password = _passwordController.text.trim();
     String email = _emailController.text.trim();
     String phoneNumber = _phoneNumberController.text.trim();
- 
+
     if (_selectedImageUrl == null) {
       _showErrorDialog(context, 'Please select a profile image.');
       return;
     }
- 
+
     if (username.isEmpty) {
       _showErrorDialog(context, 'Please enter username.');
       return;
     }
- 
+
     if (password.isEmpty) {
       _showErrorDialog(context, 'Please enter password.');
       return;
     }
- 
+
     if (!isEmailValid(email)) {
       _showErrorDialog(
           context, 'Invalid email format. Please enter a valid email.');
       return;
     }
- 
+
     if (!isPhoneNumberValid(phoneNumber)) {
       _showErrorDialog(context,
           'Invalid phone number format. Please enter a 10-digit phone number.');
       return;
     }
- 
+
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
         email: email,
         password: password,
-      );
- 
-      await usersCollection.doc(userCredential.user!.uid).set({
-        'username': username,
-        'email': email,
-        'phoneNumber': phoneNumber,
-        'profileImageUrl': _selectedImageUrl,
-        'createdAt': FieldValue.serverTimestamp(), // Add timestamp
+      )
+          .then((value) async {
+        // create data to firebase
+        Map<String, dynamic> userData = {
+          'username': username,
+          'email': email,
+          'phoneNumber': phoneNumber,
+          'profileImageUrl': _selectedImageUrl,
+          'createdAt': FieldValue.serverTimestamp(),
+        };
+
+        // create reference
+        final userReference =
+            FirebaseFirestore.instance.collection('users').doc(value.user!.uid);
+
+        await userReference.set(userData);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Login()),
+        );
       });
- 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Login()),
-      );
+
     } catch (e) {
       _showErrorDialog(
           context, 'Failed to create an account. Please try again.');

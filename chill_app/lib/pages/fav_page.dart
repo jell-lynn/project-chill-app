@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
- 
+
 class favPage extends StatefulWidget {
   const favPage({super.key});
- 
+
   @override
   State<favPage> createState() => _favPageState();
 }
- 
+
 class _favPageState extends State<favPage> {
   List<DocumentSnapshot>? locations;
   String imageUrl = '';
   final currentUser = FirebaseAuth.instance.currentUser;
- 
+
   @override
   void initState() {
     super.initState();
@@ -22,7 +22,7 @@ class _favPageState extends State<favPage> {
     fetchImageUrl();
     fetchLocations();
   }
- 
+
   Future<void> fetchImageUrl() async {
     try {
       String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
@@ -38,7 +38,7 @@ class _favPageState extends State<favPage> {
       print('Error fetching image URL: $error');
     }
   }
- 
+
   Future<void> fetchLocations() async {
     // Fetch data from Firestore collection 'locations'
     final snapshot =
@@ -48,7 +48,7 @@ class _favPageState extends State<favPage> {
     // Update the state to rebuild the UI with fetched data
     setState(() {});
   }
- 
+
   Future<bool> _addToFavorite(String name, String image) async {
   try {
     final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -66,7 +66,7 @@ class _favPageState extends State<favPage> {
     return false; // ส่งค่าเป็น false เมื่อเกิดข้อผิดพลาด
   }
 }
- 
+
 Future<bool> _removeToFavorite(String documentId) async {
   try {
     final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -80,9 +80,9 @@ Future<bool> _removeToFavorite(String documentId) async {
     return false; // ส่งค่าเป็น false เมื่อเกิดข้อผิดพลาด
   }
 }
- 
- 
- 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

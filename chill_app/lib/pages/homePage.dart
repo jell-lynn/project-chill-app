@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:chill_app/pages/home_swipe.dart';
 import 'package:chill_app/pages/home_nearby.dart';
 import 'package:chill_app/pages/home_livemap.dart';
- 
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
- 
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
- 
+
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
- 
+
   final List<Widget> _pages = [
     HomeSwipe(),
     NearbyPage(),
     LiveMapPage(),
   ];
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +34,14 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   Image.network(
-                  'https://drive.google.com/uc?export=view&id=1TEuoAczH_WCEBC-H0EXBOpVFNVRciSNL',
-                  scale: 30,
-                ),
+                //    Image.network(
+                //   'https://drive.google.com/uc?export=view&id=1TEuoAczH_WCEBC-H0EXBOpVFNVRciSNL',
+                //   scale: 30,
+                // ),
+                Image.asset(
+                    'assets/logo.png',
+                    scale: 25,
+                  ),
                   SizedBox(width: 10),
                   Text(
                     'Let’s Chill',
@@ -123,8 +127,7 @@ class _HomePageState extends State<HomePage> {
         ),
         ),
       body: _pages[_selectedIndex],
-     
+      
     );
   }
 }
- 

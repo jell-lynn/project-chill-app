@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "812521849481",
+    "project_id": "chill-app-809e7",
+    "storage_bucket": "chill-app-809e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812521849481:android:5dcf460b2eedbf55157c58",
+        "android_client_info": {
+          "package_name": "com.example.chill_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhIOfW2U9Cu8UY8_3rSYHtLv3bmZ8WjjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812521849481:android:c5390c53f370ee42157c58",
+        "android_client_info": {
+          "package_name": "com.example.chill_app_p"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhIOfW2U9Cu8UY8_3rSYHtLv3bmZ8WjjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812521849481:android:08ec2759de4b4437157c58",
+        "android_client_info": {
+          "package_name": "com.example.let_chill_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhIOfW2U9Cu8UY8_3rSYHtLv3bmZ8WjjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
